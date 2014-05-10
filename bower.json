@@ -1,0 +1,12 @@
+{
+  "name": "lowrezjam2014",
+  "version": "0.0.0",
+  "author": "",
+  "description": "",
+  "repository": "",
+  "private": true,
+  "dependencies": {
+	"phaser-official": "latest"
+  }
+}
+
