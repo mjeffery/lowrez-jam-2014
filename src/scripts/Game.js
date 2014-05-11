@@ -5,7 +5,6 @@
 		preload: function(load) {
 			load.image('test-tiles-green', 'assets/img/test tiles green.png');
 			load.tilemap('green-test-level', 'assets/tilemap/green test level.json', undefined, Phaser.Tilemap.TILED_JSON);
-
 		}
 	});
 
@@ -21,9 +20,9 @@
 			layer.resizeWorld();
 
 			var player = this.player = this.add.existing(new Player(this.game, 12, 20));
-
 			this.game.camera.follow(player);
 		},
+		
 		update: function() {
 			var physics = this.game.physics,
 				player = this.player,

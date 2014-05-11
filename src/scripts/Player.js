@@ -5,6 +5,16 @@
 		this.animations.add('stand', [0]);
 		this.animations.play('stand');
 
+		this.sounds = {
+			jump: game.add.audio('player-jump'),
+			shoot: game.add.audio('player-shoot')
+		};
+
+		// shooting
+		var bullets = this.bullets = new Pool(game, 10, PlayerBullet);
+		game.add.existing(bullets);
+
+		// physics
 		game.physics.enable(this, Phaser.Physics.ARCADE);
 		this.body.setSize(3, 6, 0, 2);
 		this.body.acceleration.y = Player.Gravity; 
@@ -12,6 +22,7 @@
 		this.grounded = false;
 		this.canVariableJump = false;
 
+		// input
 		var input = this.game.input.keyboard,
 			keys = this.keys = input.createCursorKeys();
 
@@ -21,6 +32,8 @@
 		});
 
 		input.addKeyCapture(_.values(keys));
+
+		keys.shoot.onDown.add(this.shoot, this);
 	}
 
 	_.extend(Player, {
@@ -31,9 +44,14 @@
 			Speed: -30,
 			Duration: 150
 		},
+		Bullet: {
+			Speed: 24
+		},
 		Gravity: 60,
 		preload: function(load) {
 			load.spritesheet('player', 'assets/spritesheet/player.png', 4, 8);
+			load.audio('player-jump', ['assets/audio/jump.mp3', 'assets/audio/jump.ogg']);
+			load.audio('player-shoot', ['assets/audio/player shoot.mp3', 'assets/audio/player shoot.ogg']);
 		}
 	});
 
@@ -59,6 +77,7 @@
 
 			// jump logic 
 			if(grounded && keys.jump.justPressed(5)) {
+				this.sounds.jump.play();
 				this.body.velocity.y = Player.Jump.Speed;
 				this.canVariableJump = true;
 			}
@@ -68,6 +87,24 @@
 			
 			if(keys.jump.isUp) 
 				this.canVariableJump = false;
+		},
+
+		shoot: function() {
+			var x, y, vel;
+
+			if(this.facing == Phaser.LEFT) {
+				x = this.x;
+				y = this.y + 3;
+				vel = -Player.Bullet.Speed;
+			}
+			else {
+				x = this.x + 3;
+				y = this.y + 3;
+				vel = Player.Bullet.Speed;
+			}
+
+			var bullet = this.bullets.obtain(x, y);
+			bullet.body.velocity.x = vel;
 		}
 	});
 
