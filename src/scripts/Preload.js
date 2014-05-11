@@ -14,6 +14,8 @@
 			load.setPreloadSprite(loadingBar);
 
 			load.bitmapFont('minecraftia', 'assets/font/minecraftia.png', 'assets/font/minecraftia.xml');
+			Game.preload(load);
+			Player.preload(load);
 			// Preload content here
 
 			load.onLoadComplete.addOnce(this.onLoadComplete, this);					

@@ -6,3 +6,4 @@ game.state.add('game', Game);
 
 game.state.start('boot');
 
+game.antialias = false;
