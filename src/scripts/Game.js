@@ -4,7 +4,7 @@
 	_.extend(Game, {
 		preload: function(load) {
 			load.image('test-tiles-green', 'assets/img/test tiles green.png');
-			load.tilemap('green-test-level', 'assets/tilemap/green test level.json', undefined, Phaser.Tilemap.TILED_JSON);
+			load.tilemap('green-test-arena', 'assets/tilemap/green test arena.json', undefined, Phaser.Tilemap.TILED_JSON);
 		}
 	});
 
@@ -12,9 +12,9 @@
 		create: function() {
 			this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-			var map = this.map = this.add.tilemap('green-test-level');
-			map.addTilesetImage('Green Tiles', 'test-tiles-green', 4, 4);
-			map.setCollision(2);
+			var map = this.map = this.add.tilemap('green-test-arena');
+			map.addTilesetImage('test tiles green', 'test-tiles-green', 4, 4);
+			map.setCollision([3, 4, 11, 12]);
 
 			var layer = this.layer = map.createLayer('terrain');
 			layer.resizeWorld();
