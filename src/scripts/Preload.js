@@ -16,6 +16,9 @@
 			load.bitmapFont('minecraftia', 'assets/font/minecraftia.png', 'assets/font/minecraftia.xml');
 			Game.preload(load);
 			Player.preload(load);
+			Mothership.preload(load);
+			Fighter.preload(load);
+			SmallReticle.preload(load);
 			// Preload content here
 
 			load.onLoadComplete.addOnce(this.onLoadComplete, this);					

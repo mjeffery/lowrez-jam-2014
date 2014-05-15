@@ -126,6 +126,26 @@
 				case Phaser.UP:    vel.y -= Player.Burst; break;
 				case Phaser.DOWN:  vel.y += Player.Burst; break; 
 			}
+		},
+
+		hitWithLaser: function(object, callback, context) {
+			if(!this.isShooting) return;
+
+			if(object.type === Phaser.SPRITE) {
+				if(this.testLaser(object)) 
+					callback.call(context, object);
+			}
+			else if (object.type === Phaser.GROUP) {
+				for(var i = 0, len = object.children.length; i < len; i++)
+					this.hitWithLaser(object.children[i], callback, context);
+			}
+		},
+
+		testLaser: function(object) {
+			if(!this.isShooting) return false;
+
+			var bounds = this.lasers[this.direction].getBounds();
+			return Phaser.Rectangle.intersects(bounds, object.getBounds());
 		}
 	});
 

@@ -19,8 +19,20 @@
 			var layer = this.layer = map.createLayer('terrain');
 			layer.resizeWorld();
 
+			var mothership = this.mothership = this.add.existing(new Mothership(this.game, 32, 32));
+
 			var player = this.player = this.add.existing(new Player(this.game, 12, 20));
 			this.game.camera.follow(player);
+
+			var enemies = this.enemies = this.add.group();
+			for(var i = 0; i < 10; i++) {
+				var x = this.world.randomX,
+					y = this.world.randomY,
+					fighter = new Fighter(this.game, x, y);
+
+				enemies.add(fighter);
+			}
+
 		},
 		
 		update: function() {
@@ -29,7 +41,13 @@
 				world = this.layer;
 
 			physics.arcade.collide(player, world);
+		
+			player.hitWithLaser(this.enemies, function(enemy) {
+				if(enemy.reticle) enemy.reticle.start();
+				// TODO some kind of target management
+			})
 		}
+
 	}
 
 	exports.Game = Game;	
